@@ -1,5 +1,8 @@
 import tkinter as tk
 
+from src.doors import DoorFrame
+from src.lights import LightFrame
+from src.members import MemberFrame
 from theme import *
 
 
@@ -9,46 +12,16 @@ class Home:
 
     def mainWindow(self):
         frame = tk.Frame(bg=BACKGROUND)
-        frame.pack(fill=tk.X)  # fillMaxWidth() in kotlin
+        frame.pack(fill=tk.X)  # fillMaxWidth() on kotlin
 
         frame.columnconfigure(0, weight=1)
         frame.columnconfigure(1, weight=1)
         frame.columnconfigure(2, weight=1)
 
-        lights_label = tk.Label(
-            master=frame,
-            text='Lights',
-            bg=BACKGROUND,
-            fg=FOREGROUND,
-            font=FONT
-        )
-        members_label = tk.Label(
-            master=frame,
-            text='Members',
-            bg=BACKGROUND,
-            fg=FOREGROUND,
-            font=FONT
-        )
-        doors_label = tk.Label(
-            master=frame,
-            text='Doors',
-            bg=BACKGROUND,
-            fg=FOREGROUND,
-            font=FONT
-        )
+        lights = LightFrame(frame)
+        members = MemberFrame(frame)
+        doors = DoorFrame(frame)
 
-        lights_label.grid(
-            row=0,
-            column=0,
-            sticky=tk.EW
-        )
-        members_label.grid(
-            row=0,
-            column=1,
-            sticky=tk.EW
-        )
-        doors_label.grid(
-            row=0,
-            column=2,
-            sticky=tk.EW
-        )
+        lights.light_content()
+        members.member_content()
+        doors.door_content()
