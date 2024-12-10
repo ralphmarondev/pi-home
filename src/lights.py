@@ -104,4 +104,5 @@ class LightRpiAction:
         pass
 
     def action_on_rpi(self, light_name):
-        print(f'Configure pin of: {light_name}')
+        print(f'Configure rpi pin for: {light_name}')
+        print()
