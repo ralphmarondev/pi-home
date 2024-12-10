@@ -1,15 +1,17 @@
-from home import Home
 import tkinter as tk
+
+from home import Home
+
 
 def main():
     print('Hello there, Ralph Maron Eda is here!')
     root = tk.Tk()
     root.title('Pi-Home')
-    root.geometry('500x300')
+    root.geometry('800x500')
     root.configure(bg='#333333')
 
     home = Home(root)
-    home.say_hello()
+    home.mainWindow()
 
     root.mainloop()
 

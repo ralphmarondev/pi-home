@@ -1,0 +1,3 @@
+BACKGROUND = '#333333'
+FOREGROUND = '#FFFFFF'
+FONT = ('monospace', 16)
