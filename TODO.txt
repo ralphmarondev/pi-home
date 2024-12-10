@@ -1,0 +1,6 @@
+[2024-12-10]
+- One way communication, from dashboard [gui] to rpi,
+  so when we click the button, and it is already turned on by
+  the physical button, currently, it doesn't reflect to
+  the ui, and it will think that it is currently turned off.
+  Making the color changing not cute. Fix this soon!

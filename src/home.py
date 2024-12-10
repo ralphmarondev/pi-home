@@ -1,8 +1,8 @@
 import tkinter as tk
 
-from src.doors import DoorFrame
-from src.lights import LightFrame
-from src.members import MemberFrame
+from doors import DoorFrame
+from lights import LightFrame
+from members import MemberFrame
 from theme import *
 
 
