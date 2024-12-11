@@ -1,5 +1,7 @@
 import tkinter as tk
 
+import serial
+
 from theme import *
 
 
@@ -77,13 +79,13 @@ class LightFrameAction:
         if self.states[light_name]:
             button.config(bg=FOREGROUND)  # reset color to original
             self.states[light_name] = False
+            self.action.turn_off_light(light_name)
             print(f'{light_name.capitalize()} is turned OFF')
         else:
             button.config(bg='orange')  # change color
             self.states[light_name] = True
+            self.action.turn_on_light(light_name)
             print(f'{light_name.capitalize()} is turned ON')
-
-        self.action.action_on_rpi(light_name)
 
     def light1_click(self):
         print('Light 1 is clicked')
@@ -101,8 +103,24 @@ class LightFrameAction:
 # RPI states
 class LightRpiAction:
     def __init__(self):
-        pass
+        self.arduino = serial.Serial(
+            'COM3',
+            9600,
+            timeout=1
+        )
 
-    def action_on_rpi(self, light_name):
-        print(f'Configure rpi pin for: {light_name}')
-        print()
+    def turn_on_light(self, light_name):
+        if light_name == "light1":
+            self.arduino.write(b'1')
+        elif light_name == "light2":
+            self.arduino.write(b'2')
+        elif light_name == "light3":
+            self.arduino.write(b'3')
+
+    def turn_off_light(self, light_name):
+        if light_name == "light1":
+            self.arduino.write(b'4')
+        elif light_name == "light2":
+            self.arduino.write(b'5')
+        elif light_name == "light3":
+            self.arduino.write(b'6')
