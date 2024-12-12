@@ -101,35 +101,31 @@ class LightFrameAction:
 # RPI states
 class LightRpiAction:
     def __init__(self):
-        self.pins = {
-            "light1": 17,
-            "light2": 27,
-            "light3": 22
-        }
-
-        GPIO.setmode(GPIO.BCM)
-        GPIO.setwarnings(False)
-
-        for pin in self.pins.values():
-            GPIO.setup(pin, GPIO.OUT)
-            GPIO.output(pin, GPIO.LOW)
+        # self.arduino = serial.Serial(
+        #     'COM3',
+        #     9600,
+        #     timeout=1
+        # )
+        pass
 
     def turn_on_light(self, light_name):
-        pin = self.pin.get(light_name)
-        if pin is not None:
-            GPIO.output(pin, GPIO.HIGH)
-            print(f'{light_name.capitalize()} is ON')
-        else:
-            print(f'Error: Pin for {light_name} not configured!')
+        if light_name == "light1":
+            # self.arduino.write(b'1')
+            print('Light 1 is ON')
+        elif light_name == "light2":
+            # self.arduino.write(b'2')
+            print('Light 2 is ON')
+        elif light_name == "light3":
+            # self.arduino.write(b'3')
+            print('Light 3 is ON')
 
     def turn_off_light(self, light_name):
-        pin = self.pin.get(light_name)
-        if pin is not None:
-            GPIO.ouput(pin, GPIO.LOW)
-            print(f'{light_name.capitalize()} is OFF')
-        else:
-            print(f'Error: Pin for {light_name} not configured!')
-
-    def cleanup(self):
-        GPIO.cleanup()
-        print('GPIO resources cleaned up!')
+        if light_name == "light1":
+            # self.arduino.write(b'4')
+            print('Light 1 is OFF')
+        elif light_name == "light2":
+            # self.arduino.write(b'5')
+            print('Light 2 is OFF')
+        elif light_name == "light3":
+            # self.arduino.write(b'6')
+            print('Light 3 is OFF')
