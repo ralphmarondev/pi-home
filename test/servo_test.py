@@ -1,4 +1,7 @@
+import time
 import tkinter as tk
+
+import RPi.GPIO as GPIO
 
 
 class ServoTest(tk.Tk):
@@ -48,6 +51,12 @@ class ServoTestAction:
         self.state = {
             "button": False
         }
+        self.servo_pin = 17  # pin for servo
+        GPIO.setmode(GPIO.BCM)
+        GPIO.setwarnings(False)
+        GPIO.setup(self.servo_pin, GPIO.OUT)
+        self.servo = GPIO.PWM(self.servo_pin, 50)  # 50Hz for servo
+        self.servo.start(0)  # initialize servo position
 
     def __toggle(self, name: str):
         button = getattr(self, 'button', None)
@@ -58,24 +67,38 @@ class ServoTestAction:
         if self.state[name]:
             button.config(bg='#ffffff')
             self.state[name] = False
-            self.turn_off()
+            self.door_close()
         else:
             button.config(bg='orange')
             self.state[name] = True
-            self.turn_on()
+            self.door_open()
 
     def on_click(self):
         self.__toggle('button')
 
-    def turn_on(self):
+    def door_open(self):
         # TODO: Open door [rotate servo]
-        print('on')
+        print('Opening door...')
+        # 7.5 = 2.5 + (90degrees/18.0) 0deg = 2.5%, 18.0 = 180 deg = 12.5%
+        self.servo.ChangeDutyCycle(7.5)  # 90 degrees
+        time.sleep(1)  # delay for servo to reach to position
 
-    def turn_off(self):
+    def door_close(self):
         # TODO: Close door [rotate the servo back to its original angle]
-        print('off')
+        print('Closing door...')
+        self.servo.ChangeDutyCycle(2.5)  # 0 degrees
+        time.sleep(1)
+
+    def cleanup(self):
+        self.servo.stop()
+        GPIO.cleanup()
+        print('GPIO cleaned up')
 
 
+# Servo config
+# Red [VCC] 5v or 3.3v on rpi
+# Brown/Black [GND] ground pin on rpi
+# Yellow/Orange [Signal] -> GPIO17
 if __name__ == '__main__':
     app = ServoTest()
 
