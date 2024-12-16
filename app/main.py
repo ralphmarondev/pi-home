@@ -5,6 +5,7 @@ from app.door.doors import DoorFrame
 from app.light.lights import LightFrame
 from app.members.members import MemberFrame
 from theme import *
+from utils.app_thread import AppThread
 
 
 class App(tk.Tk):
@@ -51,4 +52,14 @@ if __name__ == '__main__':
     config.set_fullscreen()
     config.toggle_fullscreen()
 
+    app_thread = AppThread()
+    app_thread.start()
+
+
+    def on_close():
+        app_thread.stop()
+        app.destroy()
+
+
+    app.protocol("WM_DELETE_WINDOW", on_close)
     app.mainloop()
