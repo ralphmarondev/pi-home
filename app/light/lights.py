@@ -1,5 +1,6 @@
 import tkinter as tk
 
+from app.light.light_action import *
 from app.theme import *
 
 
@@ -7,7 +8,7 @@ from app.theme import *
 class LightFrame:
     def __init__(self, frame: tk.Frame):
         self.frame = frame
-        self.action = SayHI()
+        self.action = LightAction()
 
     def content(self):
         frame_lights = tk.Frame(master=self.frame, bg=BACKGROUND)
@@ -28,21 +29,24 @@ class LightFrame:
             text="Light 1",
             bg=FOREGROUND,
             fg=BACKGROUND,
-            font=FONT
+            font=FONT,
+            command=self.action.light1_click
         )
         light_button2 = tk.Button(
             master=frame_lights,
             text="Light 2",
             bg=FOREGROUND,
             fg=BACKGROUND,
-            font=FONT
+            font=FONT,
+            command=self.action.light2_click
         )
         light_button3 = tk.Button(
             master=frame_lights,
             text="Light 3",
             bg=FOREGROUND,
             fg=BACKGROUND,
-            font=FONT
+            font=FONT,
+            command=self.action.light3_click
         )
 
         light_button1.grid(row=1, column=0, pady=5)
@@ -50,11 +54,6 @@ class LightFrame:
         light_button3.grid(row=3, column=0, pady=5)
 
         # Store button references in the action object
-        self.action.light_button1 = light_button1
-        self.action.light_button2 = light_button2
-        self.action.light_button3 = light_button3
-
-
-class SayHI:
-    def __init__(self):
-        pass
+        self.action.light1 = light_button1
+        self.action.light2 = light_button2
+        self.action.light3 = light_button3
