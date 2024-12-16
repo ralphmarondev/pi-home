@@ -1,16 +1,14 @@
 import tkinter as tk
 
-BACKGROUND = '#333333'
-FOREGROUND = '#FFFFFF'
-FONT = ('monospace', 16)
+from app.theme import *
 
 
-class TestDoorFrame:
+class DoorFrame:
     def __init__(self, frame: tk.Frame):
         self.frame = frame
-        self.action = TestDoorFrameAction()
+        self.action = DoorFrameAction()
 
-    def door_content(self):
+    def content(self):
         frame_doors = tk.Frame(master=self.frame, bg=BACKGROUND)
         frame_doors.grid(row=0, column=2, sticky="nsew")
         frame_doors.columnconfigure(0, weight=1)
@@ -59,7 +57,7 @@ class TestDoorFrame:
         self.action.door3 = door_button3
 
 
-class TestDoorFrameAction:
+class DoorFrameAction:
     def __init__(self):
         self.state = {
             "door1": False,
@@ -103,7 +101,7 @@ class TestDoorFrameAction:
 
 if __name__ == '__main__':
     root = tk.Tk()
-    root.title('Test Door')
+    root.title('Door')
     root.geometry('500x300')
     root.configure(bg='#333333')
 
@@ -111,8 +109,8 @@ if __name__ == '__main__':
         master=root,
         bg='#333333'
     )
-    door = TestDoorFrame(frame)
-    door.door_content()
+    door = DoorFrame(frame)
+    door.content()
 
     frame.pack()
     root.mainloop()

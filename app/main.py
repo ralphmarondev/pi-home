@@ -1,0 +1,54 @@
+import tkinter as tk
+
+from app.config import Config
+from app.door.doors import DoorFrame
+from app.light.lights import LightFrame
+from app.members.members import MemberFrame
+from theme import *
+
+
+class App(tk.Tk):
+    def __init__(self):
+        super().__init__()
+        self.top_app_bar()
+        self.content()
+        self.bottom_app_bar()
+
+    def top_app_bar(self):
+        top_bar = tk.Frame(self, bg="purple", height=40)
+        top_bar.pack(fill=tk.X, side=tk.TOP)
+        header_label = tk.Label(top_bar, text="Capstone Project", fg="white", bg='purple', font=('monospace', 16))
+        header_label.pack(padx=10, pady=5)
+
+    def content(self):
+        frame = tk.Frame(bg=BACKGROUND)
+        frame.pack(fill=tk.BOTH, expand=True)  # fillMaxSize() on kotlin
+
+        frame.columnconfigure(0, weight=1)
+        frame.columnconfigure(1, weight=1)
+        frame.columnconfigure(2, weight=1)
+
+        light = LightFrame(frame)
+        member = MemberFrame(frame)
+        door = DoorFrame(frame)
+
+        light.content()
+        member.content()
+        door.content()
+
+    def bottom_app_bar(self):
+        copyright_label = tk.Label(self, text="BSCPE 2024", font=('monospace', 10))
+        copyright_label.pack(side=tk.BOTTOM, fill=tk.X, pady=5)
+
+
+if __name__ == '__main__':
+    app = App()
+
+    app.title('PiHome')
+    app.geometry('500x300')
+
+    config = Config(app)
+    config.set_fullscreen()
+    config.toggle_fullscreen()
+
+    app.mainloop()
