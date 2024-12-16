@@ -4,7 +4,6 @@ from app.light.light_action import *
 from app.theme import *
 
 
-# UI
 class LightFrame:
     def __init__(self, frame: tk.Frame):
         self.frame = frame
