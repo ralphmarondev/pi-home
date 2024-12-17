@@ -1,3 +1,6 @@
+import threading
+import time
+
 from app.theme import *
 
 
@@ -12,6 +15,54 @@ class LightAction:
         self.light1_pin = 0
         self.light2_pin = 2
         self.light3_pin = 4
+        self.count = 0
+
+        self.running = True
+        self.thread = threading.Thread(target=self.run_thread)
+        self.thread.daemon = True
+        print('starting light initialized')
+
+    def run_thread(self):
+        print('light thread started')
+        while self.running:
+            self.run()
+            time.sleep(5)
+
+    def start(self):
+        print('starting light thread')
+        self.thread.start()
+
+    def stop(self):
+        print('stopping light thread')
+        self.running = False
+        self.thread.join()
+
+    # TODO: Update this to implement the actual logic.
+    # TODO: What matters now is thread is running!
+    def run(self):
+        print('light thread triggered')
+        print(f'Count: {self.count}')
+        name = 'light1'
+        light = getattr(self, name, None)
+        if not light:
+            print(f'{light} is not configured.')
+            return
+
+        if self.count % 2 == 0:
+            self.state[name] = False
+            light.config(
+                bg=FOREGROUND,
+                fg='#333333'
+            )
+            self.__close_light(name)
+        else:
+            self.state[name] = True
+            light.config(
+                bg='#FF9800',
+                fg='#ffffff'
+            )
+            self.__open_light(name)
+        self.count += 1
 
     def __toggle(self, name: str):
         light = getattr(self, name, None)

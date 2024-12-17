@@ -47,6 +47,9 @@ class App(tk.Tk):
         member.content()
         door.content()
 
+        # threads
+        light.start_thread()
+
     def bottom_app_bar(self):
         copyright_label = tk.Label(
             master=self,
