@@ -82,17 +82,6 @@ potential of smart home technologies in improving convenience, safety, and energ
 
 ---
 
-## About the Developer
-
-Hi! I'm Ralph Maron A. Eda, a 4th-year computer engineering student with a passion for creating innovative systems that blend
-hardware and software seamlessly. PiHome is part of my capstone project for Embedded Systems 2 and is a miniature
-version of my thesis project.
-
-I enjoy tackling challenges in automation and IoT, and PiHome reflects my commitment to designing practical and
-efficient solutions for real-world needs. If you have any feedback or suggestions, feel free to reach out!
-
----
-
 ## License
 
 This project is licensed under the [MIT License](LICENSE.txt).
