@@ -20,11 +20,17 @@ class LightAction:
             return
 
         if self.state[name]:
-            light.config(bg=FOREGROUND)
+            light.config(
+                bg=FOREGROUND,
+                fg='#333333'
+            )
             self.state[name] = False
             self.__close_light(name)
         else:
-            light.config(bg='orange')
+            light.config(
+                bg='#FF9800',
+                fg='#ffffff'
+            )
             self.state[name] = True
             self.__open_light(name)
 

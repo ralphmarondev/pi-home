@@ -16,9 +16,19 @@ class App(tk.Tk):
         self.bottom_app_bar()
 
     def top_app_bar(self):
-        top_bar = tk.Frame(self, bg="purple", height=40)
+        top_bar = tk.Frame(
+            master=self,
+            bg="#5E3B8E",
+            height=40
+        )
         top_bar.pack(fill=tk.X, side=tk.TOP)
-        header_label = tk.Label(top_bar, text="Capstone Project", fg="white", bg='purple', font=('monospace', 16))
+        header_label = tk.Label(
+            master=top_bar,
+            text="Capstone Project",
+            fg="#ffffff",
+            bg='#5E3B8E',
+            font=('monospace', 16)
+        )
         header_label.pack(padx=10, pady=5)
 
     def content(self):
@@ -38,8 +48,14 @@ class App(tk.Tk):
         door.content()
 
     def bottom_app_bar(self):
-        copyright_label = tk.Label(self, text="BSCPE 2024", font=('monospace', 10))
-        copyright_label.pack(side=tk.BOTTOM, fill=tk.X, pady=5)
+        copyright_label = tk.Label(
+            master=self,
+            text="BSCPE 2024",
+            font=('monospace', 10),
+            bg='#DCD0FF',
+            fg='#333333'
+        )
+        copyright_label.pack(side=tk.BOTTOM, fill=tk.X)
 
 
 if __name__ == '__main__':
