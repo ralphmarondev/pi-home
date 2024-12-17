@@ -9,11 +9,27 @@ class MemberFrame:
         self.members = [
             'Ralph Maron Eda',
             'Nympha Lebantino',
-            'Elisha',
-            'Jaymark',
-            'Angel',
-            'Marylitte',
-            'Jamaica'
+            'Elisha Macalanda',
+            'Jhaymark Basa',
+            'Mark John Germinal',
+            'Glenn Kylle Fronda',
+            'Kurt Estorquia',
+            'Ivan Rosini',
+            'Triesha Mae Olunan',
+            'Joanna Saballero',
+            'Shanlei Cabbab',
+            'Jezlyn Cabbab',
+            'Neal Mabborang',
+            'Jack Cabigayan',
+            'Hannah Joyce Carag',
+            'Ariel Annunciacon',
+            'Joseph Aguinaldo',
+            'Rhea Oloraza',
+            'Pauline Dumlao',
+            'Angel Apay',
+            'Jamaica Quizzaga',
+            'Jaylord Agub',
+            'Marylitte Capistrano'
         ]
 
     def content(self):
