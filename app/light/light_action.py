@@ -44,8 +44,6 @@ class LightAction:
             self.run()
             time.sleep(5)
 
-    # TODO: Update this to implement the actual logic.
-    # TODO: What matters now is thread is running!
     def run(self):
         print('Checking light states')
         for name, pin in self.light_pins.items():
@@ -80,9 +78,9 @@ class LightAction:
             return
 
         if state:
-            light_button.config(bg='#FF9800', fg='#FFFFFF')
+            light_button.config(bg='#FF9800', fg=FOREGROUND)
         else:
-            light_button.config(bg=FOREGROUND, fg='#333333')
+            light_button.config(bg=FOREGROUND, fg=BACKGROUND)
 
     # public:
     def light1_click(self):

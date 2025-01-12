@@ -14,9 +14,9 @@ class PhysicalButton:
         self.rpi = RaspberryPi()
 
         # Setup GPIO pins
-        for pin in button_pins.values():
+        for pin in self.button_pins.values():
             self.rpi.setup_pin(pin, 'in')
-        for pin in led_pins.values():
+        for pin in self.led_pins.values():
             self.rpi.setup_pin(pin, 'out')
 
     def start(self):
