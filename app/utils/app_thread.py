@@ -26,3 +26,4 @@ class AppThread:
 
     def run(self):
         print('running')
+        # reading the state of the button and updating the ui
