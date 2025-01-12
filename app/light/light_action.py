@@ -2,31 +2,32 @@ import threading
 import time
 
 from app.theme import *
+from app.utils.raspberrypi import RaspberryPi
 
 
 class LightAction:
     # private:
     def __init__(self):
+        self.rpi = RaspberryPi()
         self.state = {
             "light1": False,
             "light2": False,
             "light3": False
         }
-        self.light1_pin = 0
-        self.light2_pin = 2
-        self.light3_pin = 4
-        self.count = 0
+        self.light_pins = {
+            "light1": 0,
+            "light2": 2,
+            "light3": 4
+        }
 
         self.running = True
         self.thread = threading.Thread(target=self.run_thread)
         self.thread.daemon = True
         print('starting light initialized')
 
-    def run_thread(self):
-        print('light thread started')
-        while self.running:
-            self.run()
-            time.sleep(5)
+        # setup gpio pins as output
+        for pin in self.light_pins.values():
+            self.rpi.setup_pin(pin=pin, mode='out')
 
     def start(self):
         print('starting light thread')
@@ -37,66 +38,58 @@ class LightAction:
         self.running = False
         self.thread.join()
 
+    def run_thread(self):
+        print('light thread started')
+        while self.running:
+            self.run()
+            time.sleep(5)
+
     # TODO: Update this to implement the actual logic.
     # TODO: What matters now is thread is running!
     def run(self):
-        print('light thread triggered')
-        print(f'Count: {self.count}')
-        name = 'light1'
-        light = getattr(self, name, None)
-        if not light:
-            print(f'{light} is not configured.')
+        print('Checking light states')
+        for name, pin in self.light_pins.items():
+            state = self.rpi.is_light_on(pin)
+            if self.state[name] != state:
+                self.state[name] = state
+                print(f'{name} state changed to {'on' if state else 'off'}')
+                self.update_gui(name, state)
+
+    def toggle_light(self, name: str):
+        if name not in self.light_pins:
+            print(f'Invalid light name: {name}')
             return
 
-        if self.count % 2 == 0:
-            self.state[name] = False
-            light.config(
-                bg=FOREGROUND,
-                fg='#333333'
-            )
-            self.__close_light(name)
-        else:
-            self.state[name] = True
-            light.config(
-                bg='#FF9800',
-                fg='#ffffff'
-            )
-            self.__open_light(name)
-        self.count += 1
+        current_state = self.state[name]
+        pin = self.light_pins[name]
 
-    def __toggle(self, name: str):
-        light = getattr(self, name, None)
-        if not light:
-            print('Some error')
+        if current_state:
+            self.rpi.close_light(pin)
+            self.state[name] = False
+            print(f'Turned off {name} via GUI')
+        else:
+            self.rpi.open_light(pin)
+            self.state[name] = True
+            print(f'Turned on {name} via GUI')
+        self.update_gui(name, self.state[name])
+
+    def update_gui(self, name: str, state: bool):
+        light_button = getattr(self, name, None)
+        if not light_button:
+            print(f'GUI element for {name} not configured.')
             return
 
-        if self.state[name]:
-            light.config(
-                bg=FOREGROUND,
-                fg='#333333'
-            )
-            self.state[name] = False
-            self.__close_light(name)
+        if state:
+            light_button.config(bg='#FF9800', fg='#FFFFFF')
         else:
-            light.config(
-                bg='#FF9800',
-                fg='#ffffff'
-            )
-            self.state[name] = True
-            self.__open_light(name)
-
-    def __open_light(self, name: str):
-        print(f'Opening light: {name}')
-
-    def __close_light(self, name: str):
-        print(f'Closing light: {name}')
+            light_button.config(bg=FOREGROUND, fg='#333333')
 
     # public:
     def light1_click(self):
-        self.__toggle('light1')
+        self.toggle_light('light1')
 
     def light2_click(self):
-        self.__toggle('light2')
+        self.toggle_light('light2')
 
     def light3_click(self):
-        self.__toggle('light3')
+        self.toggle_light('light3')

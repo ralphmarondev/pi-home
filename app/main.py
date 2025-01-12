@@ -4,6 +4,7 @@ from app.config import Config
 from app.door.doors import DoorFrame
 from app.light.lights import LightFrame
 from app.members.members import MemberFrame
+from app.utils.physical_button import PhysicalButton
 from theme import *
 from utils.app_thread import AppThread
 
@@ -14,6 +15,22 @@ class App(tk.Tk):
         self.top_app_bar()
         self.content()
         self.bottom_app_bar()
+
+        # setup physical buttons
+        self.physical_button_handler = PhysicalButton(
+            button_pins={
+                'button1': 17,
+                'button2': 27,
+                'button3': 22
+            },
+            led_pins={
+                'button1': 5,
+                'button2': 6,
+                'button3': 13
+            }
+        )
+        self.physical_button_handler.start()
+
 
     def top_app_bar(self):
         top_bar = tk.Frame(
