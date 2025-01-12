@@ -1,18 +1,14 @@
 import threading
 import time
-from typing import Dict
 
+from app.constants import BUTTON_LED_PINS, LED_PINS
 from app.utils.raspberrypi import RaspberryPi
 
 
 class PhysicalButton:
-    def __init__(
-            self,
-            button_pins: Dict[str, int],
-            led_pins: Dict[str, int]
-    ):
-        self.button_pins = button_pins
-        self.led_pins = led_pins
+    def __init__(self):
+        self.button_pins = BUTTON_LED_PINS
+        self.led_pins = LED_PINS
         self.running: bool = False
         self.thread = None
         self.rpi = RaspberryPi()

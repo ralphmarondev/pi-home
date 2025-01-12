@@ -56,6 +56,3 @@ class LightFrame:
         self.action.light1 = light_button1
         self.action.light2 = light_button2
         self.action.light3 = light_button3
-
-    def start_thread(self):
-        self.action.start()

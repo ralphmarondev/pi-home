@@ -17,20 +17,8 @@ class App(tk.Tk):
         self.bottom_app_bar()
 
         # setup physical buttons
-        self.physical_button_handler = PhysicalButton(
-            button_pins={
-                'button1': 17,
-                'button2': 27,
-                'button3': 22
-            },
-            led_pins={
-                'button1': 5,
-                'button2': 6,
-                'button3': 13
-            }
-        )
+        self.physical_button_handler = PhysicalButton()
         self.physical_button_handler.start()
-
 
     def top_app_bar(self):
         top_bar = tk.Frame(
@@ -65,7 +53,7 @@ class App(tk.Tk):
         door.content()
 
         # threads
-        light.start_thread()
+        light.action.start()
 
     def bottom_app_bar(self):
         copyright_label = tk.Label(
