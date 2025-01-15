@@ -1,78 +1,91 @@
 import threading
 import time
-
-from constants import *
 from utils.raspberrypi import RaspberryPi
 
+# Constants for GPIO pins (defined in a separate constants file)
+# Example:
+# BUTTON_LED_PINS = {"button1": 27, "button2": 22}
+# LED_PINS = {"button1": 17, "button2": 23}
+from constants import BUTTON_LED_PINS, LED_PINS
 
-class PhysicalButton:
-    def __init__(self, debug=False):
-        print('Initializing Physical Button...')
-        self.debug = debug
+
+class ButtonLEDController:
+    def __init__(self):
+        self.rpi = RaspberryPi()
+        self.running = False
+        self.led_states = {key: False for key in LED_PINS}  # Track LED states
+        self.thread = None
+
+        # Store the mapping of buttons to LEDs
         self.light_button_pins = BUTTON_LED_PINS
         self.led_pins = LED_PINS
-        self.running: bool = False
-        self.thread = None
-        self.rpi = RaspberryPi()
-
-        # Track button states
-        self.button_states = {button_name: False for button_name in self.light_button_pins}
-        self.led_states = {button_name: False for button_name in self.light_button_pins}
-        self.debounce_timers = {button_name: 0 for button_name in self.light_button_pins}
 
         # Setup GPIO pins
         for pin in self.light_button_pins.values():
-            self.rpi.setup_pin(pin, 'in')
+            self.rpi.setup_pin(pin, 'in')  # Buttons as input
         for pin in self.led_pins.values():
-            self.rpi.setup_pin(pin, 'out')
+            self.rpi.setup_pin(pin, 'out')  # LEDs as output
 
     def start(self):
-        print("Starting button monitoring...")
+        """Start monitoring the buttons."""
         self.running = True
         self.thread = threading.Thread(target=self._monitor_buttons, daemon=True)
         self.thread.start()
+        print("Button-LED controller started.")
 
     def stop(self):
-        print("Stopping button monitoring...")
+        """Stop monitoring the buttons."""
         self.running = False
         if self.thread:
             self.thread.join()
+        print("Button-LED controller stopped.")
 
     def _monitor_buttons(self):
-        print('Monitoring physical buttons...')
+        """Thread function to monitor the buttons and toggle LEDs."""
+        print("Monitoring buttons...")
+        previous_states = {key: False for key in self.light_button_pins}
+
         while self.running:
-            current_time = time.time()
+            for button_name, button_pin in self.light_button_pins.items():
+                # Read the current state of the button
+                current_state = self.rpi.is_light_on(button_pin)
 
-            for button_name, pin in self.light_button_pins.items():
-                current_state = self.rpi.is_light_on(pin)
-                previous_state = self.button_states[button_name]
-                last_action_time = self.debounce_timers[button_name]
+                # Detect rising edge (button press)
+                if current_state and not previous_states[button_name]:
+                    self._toggle_led(button_name)
 
-                # Detect rising edge (button press) and debounce
-                if current_state and not previous_state:
-                    if current_time - last_action_time > 0.2:  # Debounce interval (200ms)
-                        self._debug_log(f"{button_name} pressed.")
-                        self._toggle_led(button_name)
-                        self.debounce_timers[button_name] = current_time
+                # Update the previous state
+                previous_states[button_name] = current_state
 
-                # Update button state
-                self.button_states[button_name] = current_state
-
-            time.sleep(0.05)  # Polling interval (50ms)
+            time.sleep(0.05)  # Polling interval to reduce CPU usage
 
     def _toggle_led(self, button_name: str):
+        """Toggle the LED state for the given button name."""
         if button_name in self.led_pins:
             led_pin = self.led_pins[button_name]
-
             # Toggle the LED state
             self.led_states[button_name] = not self.led_states[button_name]
             if self.led_states[button_name]:
                 self.rpi.open_light(led_pin)
-                print(f"{button_name} LED turned ON (pin {led_pin}).")
+                print(f"LED for {button_name} turned ON.")
             else:
                 self.rpi.close_light(led_pin)
-                print(f"{button_name} LED turned OFF (pin {led_pin}).")
+                print(f"LED for {button_name} turned OFF.")
 
-    def _debug_log(self, message: str):
-        if self.debug:
-            print(f"[DEBUG] {message}")
+
+if __name__ == "__main__":
+    # Create the controller instance
+    controller = ButtonLEDController()
+
+    try:
+        # Start the controller
+        controller.start()
+
+        # Keep the main thread alive
+        while True:
+            time.sleep(1)
+
+    except KeyboardInterrupt:
+        # Stop the controller on Ctrl+C
+        controller.stop()
+        print("Exiting program.")
