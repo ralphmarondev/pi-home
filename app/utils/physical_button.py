@@ -1,15 +1,12 @@
 import threading
 import time
+
+# Import constants for GPIO pin mappings
+from constants import BUTTON_LED_PINS, LED_PINS
 from utils.raspberrypi import RaspberryPi
 
-# Constants for GPIO pins (defined in a separate constants file)
-# Example:
-# BUTTON_LED_PINS = {"button1": 27, "button2": 22}
-# LED_PINS = {"button1": 17, "button2": 23}
-from constants import BUTTON_LED_PINS, LED_PINS
 
-
-class ButtonLEDController:
+class PhysicalButton:
     def __init__(self):
         self.rpi = RaspberryPi()
         self.running = False
@@ -31,18 +28,18 @@ class ButtonLEDController:
         self.running = True
         self.thread = threading.Thread(target=self._monitor_buttons, daemon=True)
         self.thread.start()
-        print("Button-LED controller started.")
+        print("Physical button monitoring started.")
 
     def stop(self):
         """Stop monitoring the buttons."""
         self.running = False
         if self.thread:
             self.thread.join()
-        print("Button-LED controller stopped.")
+        print("Physical button monitoring stopped.")
 
     def _monitor_buttons(self):
         """Thread function to monitor the buttons and toggle LEDs."""
-        print("Monitoring buttons...")
+        print("Monitoring physical buttons...")
         previous_states = {key: False for key in self.light_button_pins}
 
         while self.running:
@@ -74,18 +71,18 @@ class ButtonLEDController:
 
 
 if __name__ == "__main__":
-    # Create the controller instance
-    controller = ButtonLEDController()
+    # Create the PhysicalButton instance
+    physical_button = PhysicalButton()
 
     try:
-        # Start the controller
-        controller.start()
+        # Start the physical button monitoring
+        physical_button.start()
 
         # Keep the main thread alive
         while True:
             time.sleep(1)
 
     except KeyboardInterrupt:
-        # Stop the controller on Ctrl+C
-        controller.stop()
+        # Stop monitoring on Ctrl+C
+        physical_button.stop()
         print("Exiting program.")
