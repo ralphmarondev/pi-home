@@ -18,6 +18,7 @@ class PhysicalButton:
         # Track button states
         self.button_states = {button_name: False for button_name in self.light_button_pins}
         self.led_states = {button_name: False for button_name in self.light_button_pins}
+        self.debounce_timers = {button_name: 0 for button_name in self.light_button_pins}
 
         # Setup GPIO pins
         for pin in self.light_button_pins.values():
@@ -40,19 +41,24 @@ class PhysicalButton:
     def _monitor_buttons(self):
         print('Monitoring physical buttons...')
         while self.running:
+            current_time = time.time()
+
             for button_name, pin in self.light_button_pins.items():
                 current_state = self.rpi.is_light_on(pin)
                 previous_state = self.button_states[button_name]
+                last_action_time = self.debounce_timers[button_name]
 
-                # Detect button press transition (rising edge)
+                # Detect rising edge (button press) and debounce
                 if current_state and not previous_state:
-                    self._debug_log(f"{button_name} pressed.")
-                    self._toggle_led(button_name)
+                    if current_time - last_action_time > 0.2:  # Debounce interval (200ms)
+                        self._debug_log(f"{button_name} pressed.")
+                        self._toggle_led(button_name)
+                        self.debounce_timers[button_name] = current_time
 
                 # Update button state
                 self.button_states[button_name] = current_state
 
-            time.sleep(0.1)  # Reduce CPU usage and debounce
+            time.sleep(0.05)  # Polling interval (50ms)
 
     def _toggle_led(self, button_name: str):
         if button_name in self.led_pins:
