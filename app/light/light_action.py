@@ -48,7 +48,11 @@ class LightAction:
             state = self.rpi.is_light_on(pin)
             if self.state[name] != state:
                 self.state[name] = state
-                print(f'{name} state changed to {'on' if state else 'off'}')
+                print(f'{name} state changed to ', end='')
+                if state:
+                    print('on')
+                else:
+                    print('off')
                 self.update_gui(name, state)
 
     def toggle_light(self, name: str):
