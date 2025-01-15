@@ -4,7 +4,7 @@ import time
 from theme import *
 from utils.raspberrypi import RaspberryPi
 
-from app.constants import LED_PINS
+from constants import LED_PINS
 
 
 class LightAction:
