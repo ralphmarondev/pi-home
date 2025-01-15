@@ -1,10 +1,7 @@
-import tkinter as tk
-
-from config import Config
+from config import *
 from door.doors import DoorFrame
 from light.lights import LightFrame
 from members.members import MemberFrame
-from utils.physical_button import PhysicalButton
 from theme import *
 from utils.app_thread import AppThread
 
@@ -17,8 +14,8 @@ class App(tk.Tk):
         self.bottom_app_bar()
 
         # setup physical buttons
-        self.physical_button_handler = PhysicalButton()
-        self.physical_button_handler.start()
+        # self.physical_button_handler = PhysicalButton()
+        # self.physical_button_handler.start()
 
     def top_app_bar(self):
         top_bar = tk.Frame(
@@ -72,9 +69,9 @@ if __name__ == '__main__':
     app.title('PiHome')
     app.geometry('500x300')
 
-    # config = Config(app)
-    # config.set_fullscreen()
-    # config.toggle_fullscreen()
+    config = Config(app)
+    config.set_fullscreen()
+    config.toggle_fullscreen()
 
     app_thread = AppThread()
     app_thread.start()
