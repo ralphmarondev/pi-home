@@ -4,6 +4,8 @@ import time
 from theme import *
 from utils.raspberrypi import RaspberryPi
 
+from constants import *
+
 
 class DoorAction:
     # private:
@@ -14,11 +16,7 @@ class DoorAction:
             "door2": False,
             "door3": False
         }
-        self.door_pins = {
-            "door1": 0,
-            "door2": 2,
-            "door3": 4
-        }
+        self.door_pins = DOOR_PINS
 
         self.running = True
         self.thread = threading.Thread(target=self.run_thread)
@@ -26,9 +24,9 @@ class DoorAction:
         print("Starting door monitoring...")
 
         # Attach servos and initialize door states
-        # for pin in self.door_pins.values():
-        #     self.rpi.attach_servo(pin)
-        #     self.rpi.set_servo_angle(pin, 0)  # Ensure doors are closed initially
+        for pin in self.door_pins.values():
+            self.rpi.attach_servo(pin)
+            self.rpi.set_servo_angle(pin, 0)  # Ensure doors are closed initially
 
     def start(self):
         print("Starting door thread")

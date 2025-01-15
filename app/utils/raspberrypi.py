@@ -36,7 +36,7 @@ class RaspberryPi:
         else:
             print(f'Servo already attached to pin: {pin}')
 
-    def set_servo_angle(self, pin: int, angle: int):
+    def set_servo_angle(self, pin: int, angle: float):
         if pin not in self.servos:
             print(f'No servo attached to pin {pin}. Attaching one now.')
             self.attach_servo(pin)
@@ -50,7 +50,7 @@ class RaspberryPi:
         self.servos[pin] = angle
         self.servos[pin].ChangeDutyCycle(duty_cycle)
         time.sleep(0.3)
-        self.servos[pin].ChangeDutyCycle(0)
+        self.servos[pin].ChangeDutyCycle(2.5)
 
     def __angle_to_duty_cycle(self, angle: int):
         return (0.05 * angle) + 2.5

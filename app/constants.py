@@ -24,13 +24,13 @@ LED_PINS = {
 
 # pins for servo
 BUTTON_DOOR_PINS = {
-    'button1': 10,
-    'button2': 11,
-    'button3': 12
+    'button1': 12,
+    'button2': 16,
+    'button3': 20
 }
 
 DOOR_PINS = {
-    'button1': 0,
-    'button2': 2,
-    'button3': 4
+    'door1': 23,
+    'door2': 24,
+    'door3': 25
 }
