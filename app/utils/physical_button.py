@@ -14,8 +14,9 @@ class PhysicalButton:
         self.thread = None
         self.rpi = RaspberryPi()
 
-        # Store the states of LEDs
+        # Store the states of LEDs and buttons
         self.led_states = {button_name: False for button_name in self.light_button_pins}
+        self.button_states = {button_name: False for button_name in self.light_button_pins}
 
         # Setup GPIO pins
         for pin in self.light_button_pins.values():
@@ -37,11 +38,18 @@ class PhysicalButton:
         print('Monitoring physical buttons...')
         while self.running:
             for button_name, pin in self.light_button_pins.items():
-                if self.rpi.is_light_on(pin):  # Button is pressed
+                current_state = not self.rpi.is_light_on(pin)  # Active LOW button
+                previous_state = self.button_states[button_name]
+
+                # Detect button press (transition from not pressed to pressed)
+                if current_state and not previous_state:
                     print(f'{button_name} is pressed.')
                     self._handle_led_action(button_name)
-                    time.sleep(0.5)  # Debounce delay
-            time.sleep(0.1)  # Prevent CPU overuse
+
+                # Update button state
+                self.button_states[button_name] = current_state
+
+            time.sleep(0.1)  # Polling interval to reduce CPU usage
 
     def _handle_led_action(self, button_name: str):
         if button_name in self.led_pins:
@@ -53,7 +61,7 @@ class PhysicalButton:
         self.led_states[button_name] = not self.led_states[button_name]
         if self.led_states[button_name]:
             self.rpi.open_light(led_pin)
-            print(f'LED on {led_pin} turned ON.')
+            print(f'LED on pin {led_pin} turned ON.')
         else:
             self.rpi.close_light(led_pin)
-            print(f'LED on {led_pin} turned OFF.')
+            print(f'LED on pin {led_pin} turned OFF.')
