@@ -16,7 +16,6 @@ class RaspberryPi:
 
     def is_light_on(self, pin: int):
         return GPIO.input(pin) == GPIO.HIGH
-        # return False
 
     def open_light(self, pin: int):
         GPIO.output(pin, GPIO.HIGH)

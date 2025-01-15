@@ -17,9 +17,9 @@ BUTTON_LED_PINS = {
 }
 
 LED_PINS = {
-    'button1': 5,
-    'button2': 6,
-    'button3': 13
+    'light1': 5,
+    'light2': 6,
+    'light3': 13
 }
 
 # pins for servo

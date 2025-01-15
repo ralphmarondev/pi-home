@@ -72,9 +72,9 @@ if __name__ == '__main__':
     app.title('PiHome')
     app.geometry('500x300')
 
-    config = Config(app)
-    config.set_fullscreen()
-    config.toggle_fullscreen()
+    # config = Config(app)
+    # config.set_fullscreen()
+    # config.toggle_fullscreen()
 
     app_thread = AppThread()
     app_thread.start()
