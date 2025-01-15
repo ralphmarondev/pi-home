@@ -1,16 +1,16 @@
 import threading
 import time
 
-from app.constants import *
-from app.utils.raspberrypi import RaspberryPi
+from constants import *
+from utils.raspberrypi import RaspberryPi
 
 
 class PhysicalButton:
     def __init__(self):
         self.light_button_pins = BUTTON_LED_PINS
         self.led_pins = LED_PINS
-        self.door_button_pins = BUTTON_DOOR_PINS
-        self.door_pins = DOOR_PINS
+        # self.door_button_pins = BUTTON_DOOR_PINS
+        # self.door_pins = DOOR_PINS
 
         self.running: bool = False
         self.thread = None
@@ -21,10 +21,10 @@ class PhysicalButton:
             self.rpi.setup_pin(pin, 'in')
         for pin in self.led_pins.values():
             self.rpi.setup_pin(pin, 'out')
-        for pin in self.door_button_pins.value():
-            self.rpi.setup_pin(pin, 'in')
-        for pin in self.door_pins.values():
-            self.rpi.attach_servo(pin)
+        # for pin in self.door_button_pins.value():
+        #     self.rpi.setup_pin(pin, 'in')
+        # for pin in self.door_pins.values():
+        #     self.rpi.attach_servo(pin)
 
     def start(self):
         self.running = True
@@ -45,11 +45,11 @@ class PhysicalButton:
                     time.sleep(0.5)  # Debounce to avoid multiple triggers
 
             # for doors
-            for button_name, pin in self.door_button_pins.items():
-                if self.rpi.is_light_on(pin):
-                    print(f'{button_name} button is pressed.')
-                    self._handle_door_action(button_name)
-                    time.sleep(0.5)
+            # for button_name, pin in self.door_button_pins.items():
+            #     if self.rpi.is_light_on(pin):
+            #         print(f'{button_name} button is pressed.')
+            #         self._handle_door_action(button_name)
+            #         time.sleep(0.5)
 
     def _handle_led_action(self, button_name: str):
         if button_name in self.led_pins:
@@ -62,15 +62,15 @@ class PhysicalButton:
         else:
             self.rpi.open_light(led_pin)
 
-    def _handle_door_action(self, button_name: str):
-        if button_name in self.door_pins:
-            door_pin = self.door_pins[button_name]
-            self._toggle_door(door_pin)
-
-    def _toggle_door(self, door_pin: int):
-        if self.rpi.is_door_open(door_pin):
-            self.rpi.set_servo_angle(door_pin, 0)
-            print(f'Door on pin {door_pin} closed.')
-        else:
-            self.rpi.set_servo_angle(door_pin, 90)
-            print(f'Door on pin {door_pin} opened.')
+    # def _handle_door_action(self, button_name: str):
+    #     if button_name in self.door_pins:
+    #         door_pin = self.door_pins[button_name]
+    #         self._toggle_door(door_pin)
+    #
+    # def _toggle_door(self, door_pin: int):
+    #     if self.rpi.is_door_open(door_pin):
+    #         self.rpi.set_servo_angle(door_pin, 0)
+    #         print(f'Door on pin {door_pin} closed.')
+    #     else:
+    #         self.rpi.set_servo_angle(door_pin, 90)
+    #         print(f'Door on pin {door_pin} opened.')

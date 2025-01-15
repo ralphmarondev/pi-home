@@ -1,8 +1,10 @@
 import threading
 import time
 
-from app.theme import *
-from app.utils.raspberrypi import RaspberryPi
+from theme import *
+from utils.raspberrypi import RaspberryPi
+
+from app.constants import LED_PINS
 
 
 class LightAction:
@@ -14,11 +16,7 @@ class LightAction:
             "light2": False,
             "light3": False
         }
-        self.light_pins = {
-            "light1": 0,
-            "light2": 2,
-            "light3": 4
-        }
+        self.light_pins = LED_PINS
 
         self.running = True
         self.thread = threading.Thread(target=self.run_thread)

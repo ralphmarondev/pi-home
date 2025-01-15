@@ -1,6 +1,6 @@
 import tkinter as tk
 
-from app.theme import *
+from theme import *
 
 
 class MemberFrame:

@@ -1,6 +1,6 @@
 import tkinter as tk
 
-from app.door.door_action import *
+from door.door_action import *
 
 
 class DoorFrame:

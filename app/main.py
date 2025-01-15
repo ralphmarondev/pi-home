@@ -1,10 +1,10 @@
 import tkinter as tk
 
-from app.config import Config
-from app.door.doors import DoorFrame
-from app.light.lights import LightFrame
-from app.members.members import MemberFrame
-from app.utils.physical_button import PhysicalButton
+from config import Config
+from door.doors import DoorFrame
+from light.lights import LightFrame
+from members.members import MemberFrame
+from utils.physical_button import PhysicalButton
 from theme import *
 from utils.app_thread import AppThread
 

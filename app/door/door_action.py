@@ -1,8 +1,8 @@
 import threading
 import time
 
-from app.theme import *
-from app.utils.raspberrypi import RaspberryPi
+from theme import *
+from utils.raspberrypi import RaspberryPi
 
 
 class DoorAction:
@@ -26,9 +26,9 @@ class DoorAction:
         print("Starting door monitoring...")
 
         # Attach servos and initialize door states
-        for pin in self.door_pins.values():
-            self.rpi.attach_servo(pin)
-            self.rpi.set_servo_angle(pin, 0)  # Ensure doors are closed initially
+        # for pin in self.door_pins.values():
+        #     self.rpi.attach_servo(pin)
+        #     self.rpi.set_servo_angle(pin, 0)  # Ensure doors are closed initially
 
     def start(self):
         print("Starting door thread")

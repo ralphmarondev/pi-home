@@ -1,7 +1,7 @@
 import tkinter as tk
 
-from app.light.light_action import *
-from app.theme import *
+from light.light_action import *
+from theme import *
 
 
 class LightFrame:
