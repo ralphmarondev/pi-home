@@ -11,6 +11,10 @@ class MemberFrame:
             'Nympha Lebantino',
             'Elisha Macalanda',
             'Jhaymark Basa',
+            'Angel Apay',
+            'Jamaica Quizzagan',
+            'Jaylord Agub',
+            'Marylitte Capistrano',
             'Mark John Germinal',
             'Glenn Kylle Fronda',
             'Kurt Estorquia',
@@ -25,11 +29,7 @@ class MemberFrame:
             'Ariel Annunciacon',
             'Joseph Aguinaldo',
             'Rhea Oloraza',
-            'Pauline Dumlao',
-            'Angel Apay',
-            'Jamaica Quizzaga',
-            'Jaylord Agub',
-            'Marylitte Capistrano'
+            'Pauline Dumlao'
         ]
 
     def content(self):
