@@ -13,9 +13,9 @@ potential of smart home technologies in improving convenience, safety, and energ
 
 ## Features
 
-- **Door Automation**: Control doors using a servo motor via the GUI or physical buttons.
-- **Smart Lighting**: Manage LED lights through on-screen controls or physical buttons.
-- **Real-Time Synchronization**: Ensure smooth operation between GUI and physical components.
+- **Door Automation**: Control doors using a servo motor via the GUI.
+- **Smart Lighting**: Manage LED lights through on-screen controls.
+- **Real-Time Synchronization**: Ensure smooth operation between GUI and hardware components.
 - **User-Friendly GUI**: Intuitive interface for controlling devices, designed with Tkinter.
 - **Modular Design**: Easily expandable to include additional smart home features in the future.
 
@@ -28,7 +28,6 @@ potential of smart home technologies in improving convenience, safety, and energ
 - Raspberry Pi (Main controller)
 - Servo Motor (Door control)
 - LEDs and Resistors (Lighting management)
-- Push Buttons (Physical controls)
 - Breadboard and Jumper Wires (Connections)
 
 ### **Software**
@@ -68,8 +67,7 @@ potential of smart home technologies in improving convenience, safety, and energ
 ## How It Works
 
 - Use the **Tkinter GUI** to toggle door and lighting controls.
-- Alternatively, press the physical buttons connected to the Raspberry Pi for manual control.
-- All actions are synchronized, ensuring seamless operation between GUI and hardware.
+- All actions are synchronized, ensuring seamless operation between GUI and hardware components.
 
 ---
 
