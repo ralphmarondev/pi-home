@@ -1,3 +1,8 @@
+[2025-01-22] @11:13PM
+- Make sure that the ground of the external power source is
+  connected to the ground of the raspberry pi. Any ground
+  pin will do. ^^
+
 [2024-12-10]
 - One way communication, from dashboard [gui] to rpi,
   so when we click the button, and it is already turned on by
