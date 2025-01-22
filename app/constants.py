@@ -10,12 +10,6 @@ NOTES:
 """
 
 # pins for led
-BUTTON_LED_PINS = {
-    'button1': 17,
-    'button2': 27,
-    'button3': 22
-}
-
 LED_PINS = {
     'light1': 5,
     'light2': 6,
@@ -23,12 +17,6 @@ LED_PINS = {
 }
 
 # pins for servo
-BUTTON_DOOR_PINS = {
-    'button1': 12,
-    'button2': 16,
-    'button3': 20
-}
-
 DOOR_PINS = {
     'door1': 23,
     'door2': 24,

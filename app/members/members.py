@@ -21,7 +21,7 @@ class MemberFrame:
             'Ivan Rosini',
             'Triesha Mae Olunan',
             'Joanna Saballero',
-            'Shanlei Cabbab',
+            'Shanlei Pastor',
             'Jezlyn Cabbab',
             'Neal Mabborang',
             'Jack Cabigayan',
