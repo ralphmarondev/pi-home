@@ -20,5 +20,5 @@ LED_PINS = {
 DOOR_PINS = {
     'door1': 23,
     'door2': 24,
-    'door3': 25
+    'door3': 21
 }
