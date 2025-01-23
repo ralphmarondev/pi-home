@@ -65,7 +65,7 @@ class DoorAction:
             self.state[name] = False
             print(f"Closed {name} via GUI")
         else:
-            self.rpi.set_servo_angle(pin, 90)  # Open the door
+            self.rpi.set_servo_angle(pin, 180)  # Open the door
             self.state[name] = True
             print(f"Opened {name} via GUI")
         self.update_gui(name, self.state[name])
